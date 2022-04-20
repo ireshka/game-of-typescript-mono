@@ -2,31 +2,20 @@ import * as React from 'react';
 import { Stack, Button, Box, Alert, Typography } from '@mui/material';
 import { BoardGrid } from '../BoardGrid/index';
 import { Board, GameOfLife } from '@l22-got-monorepo/got-core';
+import { generateBlankBoard } from '../../utils/generateBlankBoard';
 
-const mockBoard: Board = [
-  [0, 1, 0, 0, 0],
-  [0, 1, 0, 0, 0],
-  [1, 1, 1, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-];
-
-const clearMockBoard: Board = [
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0],
-];
 
 export const BoardWidget = () => {
   const [boardObject, setBoardObject] = React.useState<GameOfLife | null>(null);
   const [boardState, setBoardState] = React.useState<Board | null>(null);
   const [startingCellNumber, setStartingCellNumber] = React.useState<number>(0);
   const [message, setMessage] = React.useState<string | null>(null);
+  const [maxStartingCellsNumber, setMaxStartingCellsNumber] = React.useState<number>(0);
+  const [boardDimension] = React.useState<number>(10);
 
   const displayBlankBoard = async () => {
-    setBoardState(clearMockBoard);
+    setBoardState(generateBlankBoard(boardDimension));
+    setMaxStartingCellsNumber(boardDimension*boardDimension*0.2);
   };
 
   const tickGame = async () => {
@@ -46,8 +35,8 @@ export const BoardWidget = () => {
 
   const onCellClick = (rowIndex: number, cellIndex: number) => {
     if (boardObject) return;
-    if (startingCellNumber >= 4 ) {
-      setMessage('No more than 4 starting cells');
+    if (startingCellNumber >= maxStartingCellsNumber ) {
+      setMessage(`No more than ${maxStartingCellsNumber} starting cells`);
       return;
     };
     setStartingCellNumber((prev) => prev + 1);
@@ -64,7 +53,7 @@ export const BoardWidget = () => {
 
   const restartGame = () => {
     setStartingCellNumber(0);
-    setBoardState(clearMockBoard);
+    setBoardState(generateBlankBoard(boardDimension));
     setBoardObject(null);
   }
 
@@ -78,7 +67,7 @@ export const BoardWidget = () => {
         )}
         {isGameLoaded && (
           <>
-            <Typography sx={{mr: '1rem'}}>Click max 4 cells</Typography>
+            <Typography sx={{mr: '1rem'}}>{boardObject ? 'Your turn': `Click max ${maxStartingCellsNumber}`}</Typography>
             <Button variant="contained" onClick={tickGame}>
               {'Next generation'}
             </Button>

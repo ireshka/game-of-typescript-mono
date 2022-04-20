@@ -31,8 +31,8 @@ export class GameOfLife {
   }
 }
 
-type Cell = 0 | 1;
-type Row = Cell[];
+export type Cell = 0 | 1;
+export type Row = Cell[];
 export type Board = Row[];
 
 type CellPosition = {
