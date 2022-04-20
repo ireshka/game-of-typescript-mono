@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Stack, Button, Box, Alert, Typography } from '@mui/material';
+import { Stack, Button, Box, Alert, Typography, TextField } from '@mui/material';
 import { BoardGrid } from '../BoardGrid/index';
 import { Board, GameOfLife } from '@l22-got-monorepo/got-core';
 import { generateBlankBoard } from '../../utils/generateBlankBoard';
@@ -11,7 +11,7 @@ export const BoardWidget = () => {
   const [startingCellNumber, setStartingCellNumber] = React.useState<number>(0);
   const [message, setMessage] = React.useState<string | null>(null);
   const [maxStartingCellsNumber, setMaxStartingCellsNumber] = React.useState<number>(0);
-  const [boardDimension] = React.useState<number>(10);
+  const [boardDimension, setBoardDimension] = React.useState<number>(10);
 
   const displayBlankBoard = async () => {
     setBoardState(generateBlankBoard(boardDimension));
@@ -61,13 +61,31 @@ export const BoardWidget = () => {
     <>
       <Stack direction="row" justifyContent="center" alignItems="center">
         {!isGameLoaded && (
-          <Button variant="contained" onClick={displayBlankBoard}>
-            {'Start game'}
-          </Button>
+          <>
+            <Button
+              variant="contained"
+              onClick={displayBlankBoard}
+              sx={{ mr: '2rem' }}
+            >
+              {'Start game'}
+            </Button>
+            <TextField
+              defaultValue={boardDimension}
+              onChange={(event) =>
+                setBoardDimension(parseInt(event.target.value))
+              }
+              type="number"
+              size="small"
+            />
+          </>
         )}
         {isGameLoaded && (
           <>
-            <Typography sx={{mr: '1rem'}}>{boardObject ? 'Your turn': `Click max ${maxStartingCellsNumber}`}</Typography>
+            <Typography sx={{ mr: '1rem' }}>
+              {boardObject
+                ? 'Your turn'
+                : `Click max ${maxStartingCellsNumber}`}
+            </Typography>
             <Button variant="contained" onClick={tickGame}>
               {'Next generation'}
             </Button>
@@ -75,12 +93,11 @@ export const BoardWidget = () => {
         )}
       </Stack>
       {message && <Alert severity="warning">{message}</Alert>}
-      {isGameLoaded &&
-        (
-          <Box sx={{ pt: '2rem' }}>
-            <BoardGrid board={boardState} onCellClick={onCellClick} />
-          </Box>
-        )}
+      {isGameLoaded && (
+        <Box sx={{ pt: '2rem' }}>
+          <BoardGrid board={boardState} onCellClick={onCellClick} />
+        </Box>
+      )}
       {isGameLoaded && (
         <Stack direction="row" justifyContent="center" sx={{ pt: '0.5rem' }}>
           <Button variant="contained" onClick={restartGame}>
