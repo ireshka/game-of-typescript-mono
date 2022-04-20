@@ -1,6 +1,8 @@
 {
   "version": 2,
   "projects": {
-    "got-core": "packages/got-core"
+    "got-core": "packages/got-core",
+    "got-front": "packages/got-front",
+    "got-front-e2e": "packages/got-front-e2e"
   }
 }
