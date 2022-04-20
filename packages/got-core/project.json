@@ -1,0 +1,32 @@
+{
+  "root": "packages/got-core",
+  "sourceRoot": "packages/got-core/src",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/got-core",
+        "main": "packages/got-core/src/index.ts",
+        "tsConfig": "packages/got-core/tsconfig.lib.json",
+        "assets": ["packages/got-core/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/got-core/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/got-core"],
+      "options": {
+        "jestConfig": "packages/got-core/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
