@@ -4,9 +4,10 @@ import { BoardCell } from '../BoardCell/index';
 
 type BoardGridProps = {
   board: Board;
+  onCellClick: (rowIndex: number, cellIndex: number) => void;
 };
 
-export const BoardGrid = ({ board }: BoardGridProps) => {
+export const BoardGrid = ({ board, onCellClick }: BoardGridProps) => {
   const columnNumber = board[0].length;
   return (
     <Box
@@ -21,7 +22,7 @@ export const BoardGrid = ({ board }: BoardGridProps) => {
         row.map((cell, cellIndex) => {
           const keyValue = `${rowIndex} ${cellIndex}`;
           return (
-            <BoardCell key={keyValue}  rowIndex={rowIndex} cellIndex={cellIndex} cellValue={cell}/>
+            <BoardCell key={keyValue}  rowIndex={rowIndex} cellIndex={cellIndex} cellValue={cell} onCellClick={onCellClick}/>
           );
         })
       )}
