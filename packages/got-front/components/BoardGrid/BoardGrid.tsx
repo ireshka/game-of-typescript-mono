@@ -1,5 +1,6 @@
 import { Box } from '@mui/material';
 import { Board } from '@l22-got-monorepo/got-core';
+import { BoardCell } from '../BoardCell/index';
 
 type BoardGridProps = {
   board: Board;
@@ -19,14 +20,8 @@ export const BoardGrid = ({ board }: BoardGridProps) => {
       {board.map((row, rowIndex) =>
         row.map((cell, cellIndex) => {
           const keyValue = `${rowIndex} ${cellIndex}`;
-          const cellColor = cell ? 'blue' : 'lightgray';
           return (
-            <Box
-              key={keyValue}
-              sx={{ aspectRatio: '1/1', backgroundColor: cellColor }}
-            >
-              {cell}
-            </Box>
+            <BoardCell key={keyValue}  rowIndex={rowIndex} cellIndex={cellIndex} cellValue={cell}/>
           );
         })
       )}
