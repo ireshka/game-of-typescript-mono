@@ -13,8 +13,6 @@ export const BoardCell = ({ rowIndex, cellIndex, cellValue, onCellClick }: Board
   // console.log(cellIndex);
   const cellColor = cellValue ? 'blue' : 'lightgray';
   return (
-    <Box sx={{ aspectRatio: '1/1', backgroundColor: cellColor }} onClick={() => onCellClick(rowIndex, cellIndex)}>
-      {cellValue}
-    </Box>
+    <Box sx={{ aspectRatio: '1/1', backgroundColor: cellColor }} onClick={() => onCellClick(rowIndex, cellIndex)} />
   );
 };
